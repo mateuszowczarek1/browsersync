@@ -6,7 +6,7 @@
     @vite('resources/js/app.js')
     @inertiaHead
   </head>
-  <body>
+  <body class="w-full h-full bg-bgmain font-['Comic']">
     @inertia
   </body>
 </html>

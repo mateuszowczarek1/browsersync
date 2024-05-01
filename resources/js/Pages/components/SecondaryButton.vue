@@ -1,0 +1,8 @@
+<script setup>
+defineProps({
+    buttonName: String
+})
+</script>
+<template>
+      <button class="rounded-sm p-1 m-1 bg-btnsecondary hover:bg-btnprimary hover:outline-btnsecondary hover:outline outline-1 text-darktext">{{buttonName}}</button>
+</template>
