@@ -1,13 +1,21 @@
 <script setup>
-defineProps({ user: Object })
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
+defineProps({
+    user: Object,
+})
 </script>
 
 <template>
-    <Layout>
-     <Panel />
-     <Panel />
-     <Panel />
+    <Layout :user="user">
+     <Panel title="Section one">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente non!
+    </Panel>
+    <Panel title="Section two">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente non!
+    </Panel>
+    <Panel title="Section three">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente non!
+    </Panel>
     </Layout>
 </template>

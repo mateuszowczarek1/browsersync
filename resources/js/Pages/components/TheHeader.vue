@@ -1,3 +1,13 @@
+<script setup>
+import { router } from '@inertiajs/vue3'
+defineProps({
+user: Object,
+});
+
+function logout() {
+   router.post('/logout')
+}
+</script>
 <template>
     <header class="text-center bg-white/10 mx-4 rounded-xl xl:p-2 mb-4 mt-2 h-auto">
         <nav class="flex items-center flex-wrap xl:flex-row flex-col xl:gap-0">
@@ -13,6 +23,12 @@
                 <a href="#"
                     class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Home</a>
             </div>
+            <div class="xl:ml-auto xl:mt-0 mt-3 flex md:flex-row flex-col gap-4 items-center bg-white/20 xl:px-4 py-2 rounded-xl" v-if="user">
+                <img :src="user.avatar" alt="User Image" class="rounded border-2 border-white/50 h-[50px]" /> <p class="font-sm">{{user.name}}</p>
+                <button class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-0 mx-2 my-1">Dashboard</button>
+                <button class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-0 mx-2 my-1" @click="logout">Logout</button>
+        </div>
         </nav>
+
     </header>
 </template>
