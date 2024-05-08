@@ -10,7 +10,7 @@ Route::get('/', function () {
     return Inertia::render('Home', [
         'user' => Auth::user(),
     ]);
-});
+})->name('Home');
 
 
 #Auth

@@ -1,11 +1,11 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { router, Link } from '@inertiajs/vue3'
 defineProps({
-user: Object,
+    user: Object,
 });
 
 function logout() {
-   router.post('/logout')
+    router.post('/logout')
 }
 </script>
 <template>
@@ -23,11 +23,30 @@ function logout() {
                 <a href="#"
                     class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Home</a>
             </div>
-            <div class="xl:ml-auto xl:mt-0 mt-3 flex md:flex-row flex-col gap-4 items-center bg-white/20 xl:px-4 py-2 rounded-xl" v-if="user">
-                <img :src="user.avatar" alt="User Image" class="rounded border-2 border-white/50 h-[50px]" /> <p class="font-sm">{{user.name}}</p>
-                <button class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-0 mx-2 my-1">Dashboard</button>
-                <button class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-0 mx-2 my-1" @click="logout">Logout</button>
-        </div>
+            <div
+                class="xl:ml-auto xl:mt-0 mt-3 flex md:flex-row flex-col gap-4 items-center bg-white/20 xl:px-4 py-2 rounded-xl">
+                <div v-if="user" class="xl:flex xl:flex-row flex-col items-center xl:gap-2 justify-center mx-2 p-1 ">
+                    <div><img :src="user.avatar" alt="User Image"
+                            class="rounded border-2 border-white/50 h-[50px] mx-auto" /></div>
+
+                    <p class="font-sm">{{ user.name }}</p>
+                    <Link href="/dashboard" method="get" as="button" type="button"
+                        class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
+                    Dashboard</Link>
+                    <Link href="/logout" method="post" as="button" type="button"
+                        class="border-2 py-1 px-2 rounded-xl border-purple-600 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
+                    Logout</Link>
+                </div>
+                <div v-else>
+                    <Link href="/login" method="get" as="button" type="button"
+                        class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5"
+                        @click="visit('/login')">Login</Link>
+                    <Link href="/register" method="get" as="button" type="button"
+                        class="border-2 py-1 px-2 rounded-xl border-purple-600 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300"
+                        @click="visit('/register')">Register</Link>
+                </div>
+
+            </div>
         </nav>
 
     </header>

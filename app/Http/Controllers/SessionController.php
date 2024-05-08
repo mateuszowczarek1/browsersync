@@ -11,6 +11,9 @@ class SessionController extends Controller
 
     public function create()
     {
+        if (Auth::user()) {
+            return to_route('Home');
+        }
         return Inertia::render("auth/Login");
     }
     public function destroy()
@@ -21,18 +24,17 @@ class SessionController extends Controller
 
     public function store()
     {
-        $attributes = request()->validate(['email' =>['required', 'email'], 'password' =>['required']]);
+        $attributes = request()->validate(['email' => ['required', 'email'], 'password' => ['required']]);
 
-       if(!Auth::attempt($attributes))
-       {
-           throw \Illuminate\Validation\ValidationException::withMessages([
-               'email' => 'These credentials do not match our records.',
-               'password' => 'Provide password and try again.',
-           ]);
-       }
+        if (!Auth::attempt($attributes)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'email' => 'These credentials do not match our records.',
+                'password' => 'Provide password and try again.',
+            ]);
+        }
 
         request()->session()->regenerate();
 
-        return redirect('/');
+        return to_route('Home');
     }
 }
