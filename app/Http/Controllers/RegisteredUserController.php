@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
         $user = User::create($validatedAttributes);
 
         Auth::login($user);
-        return to_route('Home');
+        return to_route('dashboard');
 
     }
 }

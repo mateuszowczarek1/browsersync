@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,8 @@ Route::get('/', function () {
     ]);
 })->name('Home');
 
+
+Route::get('/dashboard', [BookmarkController::class, 'index'])->name('dashboard')->middleware('auth');
 
 #Auth
 Route::get('/register', [RegisteredUserController::class, 'create']);

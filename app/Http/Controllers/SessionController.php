@@ -35,6 +35,6 @@ class SessionController extends Controller
 
         request()->session()->regenerate();
 
-        return to_route('Home');
+        return to_route('dashboard');
     }
 }
