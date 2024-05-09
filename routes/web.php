@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    if(Auth::user()){
+        return to_route('dashboard');
+    }
     return Inertia::render('Home', [
         'user' => Auth::user(),
     ]);

@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Bookmark;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class BookmarkSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Bookmark::factory(100)->create();
+        Category::factory(20)->create();
     }
 }

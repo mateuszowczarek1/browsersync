@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('avatar');
+            $table->string('avatar')->default('https://picsum.photos/50/50');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

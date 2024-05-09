@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookmarkRequest;
 use App\Http\Requests\UpdateBookmarkRequest;
 use App\Models\Bookmark;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class BookmarkController extends Controller
@@ -16,7 +19,10 @@ class BookmarkController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $bookmarks = $user->bookmarks()->latest()->paginate(15);
+        $bookmarks = $user->bookmarks()->with('categories')->latest()->paginate(15);
+
+        $bookmarks->load('categories');
+
         return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 

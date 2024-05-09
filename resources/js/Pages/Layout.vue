@@ -16,4 +16,3 @@ defineProps({
 <TheFooter />
 
 </template>
-

@@ -17,6 +17,7 @@ defineProps({
                     <p class="text-xs">
                         <span class="font-bold text-purple-300">URL as plain text:</span> {{ bookmark.url }}
                     </p>
+                    <span v-for="category in bookmark.categories" :key="category.id">{{ category.name }}</span>
                 </li>
             </ul>
 
@@ -27,6 +28,9 @@ defineProps({
                     <span class="text-slate-50/25" v-else :key="link.label" v-html="link.label"></span>
                 </template>
             </div>
+        </Panel>
+        <Panel v-else title="You don't have any bookmarks yet 🤭️">
+            <p><strong>Add them any time you want to!</strong></p>
         </Panel>
     </Layout>
 </template>
