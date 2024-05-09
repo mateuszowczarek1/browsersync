@@ -31,15 +31,37 @@ class BookmarkController extends Controller
      */
     public function create()
     {
-        //
+
+
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookmarkRequest $request)
+    public function store()
     {
-        //
+        request()->validate([
+            'name' => ['required', 'min:5', 'max:100'],
+            'url' => ['required', 'min:10', 'max:500']
+        ]);
+
+        $bookmark = Bookmark::create([
+            'name' => request('name'),
+            'url' => request('url'),
+            'user_id' => request('userId')
+        ]);
+
+        $uncategorizedCategory = Category::firstOrCreate(['name' => 'uncategorized']);
+
+        $bookmark->categories()->attach($uncategorizedCategory);
+
+
+
+
+
+
+        return;
     }
 
     /**

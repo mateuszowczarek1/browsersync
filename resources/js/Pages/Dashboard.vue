@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/userStore';
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
 import BookmarkPaginator from './components/BookmarkPaginator.vue'
+import AddBookmarkForm from './components/AddBookmarkForm.vue';
 defineProps({
     user: Object,
     bookmarks: Object
@@ -36,7 +37,7 @@ if (user) {
             <p><strong>Add them any time you want to!</strong></p>
         </Panel>
         <Panel title="Add a bookmark">
-
+            <AddBookmarkForm :user-id="auth.user.id" />
         </Panel>
     </Layout>
 </template>
