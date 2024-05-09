@@ -1,5 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useAuthStore } from '../../store/userStore';
+const auth = useAuthStore();
 defineProps({
     user: Object,
 });
@@ -30,7 +32,7 @@ defineProps({
                     <Link href="/dashboard" method="get" as="button" type="button"
                         class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
                     Dashboard</Link>
-                    <Link href="/logout" method="post" as="button" type="button"
+                    <Link @click="auth.clearUser()" href="/logout" method="post" as="button" type="button"
                         class="border-2 py-1 px-2 rounded-xl border-purple-600 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
                     Logout</Link>
                 </div>

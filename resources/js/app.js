@@ -3,6 +3,8 @@ import './bootstrap';
 
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+import {createPinia} from "pinia";
+const pina = createPinia()
 
 createInertiaApp({
   resolve: name => {
@@ -13,6 +15,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(pina)
       .mount(el)
   },
 })

@@ -1,15 +1,22 @@
 <script setup>
+import { useAuthStore } from '../store/userStore';
+
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
-import {Link} from '@inertiajs/vue3';
+import BookmarkPaginator from './components/BookmarkPaginator.vue'
 defineProps({
     user: Object,
     bookmarks: Object
 })
+const {user} = __props;
+const auth = useAuthStore();
+if (user) {
+    auth.setUser(user);
+}
 </script>
 
 <template>
-    <Layout :user="user">
+    <Layout>
         <Panel v-if="bookmarks.data.length" title="Bookmarks">
             <ul>
                 <li v-for="bookmark in bookmarks.data" :key="bookmark.id">
@@ -22,15 +29,14 @@ defineProps({
             </ul>
 
            <!-- Paginator -->
-           <div class="mt-6 flex gap-4 border-t py-2 justify-center">
-                <template v-for="link in bookmarks.links">
-                    <Link :class="['hover:text-purple-500 transition-colors duration-300', link.active ? 'text-purple-400' : '']" v-if="link.url" :href="link.url" :key="link.url" v-html="link.label"></Link>
-                    <span class="text-slate-50/25" v-else :key="link.label" v-html="link.label"></span>
-                </template>
-            </div>
+           <BookmarkPaginator :bookmarks="bookmarks"/>
+
         </Panel>
         <Panel v-else title="You don't have any bookmarks yet 🤭️">
             <p><strong>Add them any time you want to!</strong></p>
+        </Panel>
+        <Panel title="Add a bookmark">
+
         </Panel>
     </Layout>
 </template>
