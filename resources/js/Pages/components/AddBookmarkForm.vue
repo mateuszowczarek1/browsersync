@@ -1,5 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import { computed, watch, ref, onMounted } from 'vue';
+
 defineProps({
     userId: Number,
     bookmarks: Object
@@ -21,14 +23,44 @@ function submit() {
     form.reset();
 }
 
-function checkMainCategory()
-{
-    if(form.mainCategory === 'uncategorized')
-    {
+function checkMainCategory() {
+    if (form.mainCategory === 'uncategorized') {
         form.mainCategory = '';
         return;
     }
 }
+
+const uniqueCategories = ref([]);
+
+function updateUniqueCategories(bookmarks) {
+    const categorySet = new Set();
+
+    bookmarks.data.forEach(bookmark => {
+        bookmark.categories.forEach(category => {
+            if (Array.isArray(category)) {
+                category.forEach(subCategory => {
+                    categorySet.add(subCategory.name);
+                });
+            } else {
+                categorySet.add(category.name);
+            }
+        });
+    });
+
+    uniqueCategories.value = Array.from(categorySet).map((el, i) => ({ id: i, name: el }));
+};
+
+watch(() => __props.bookmarks, () => {
+    updateUniqueCategories(__props.bookmarks);
+});
+
+const uniqueCategoriesComputed = computed(() => {
+    return uniqueCategories.value;
+});
+
+onMounted(() => updateUniqueCategories(__props.bookmarks));
+
+console.log(__props.bookmarks)
 </script>
 
 <template>
@@ -48,15 +80,20 @@ function checkMainCategory()
             </p>
         </div>
         <div>
-            <label for="mainCategory" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark categories:</label>
-            <select v-model="form.mainCategory" id="mainCategory" name="mainCategory" class="my-2 bg-purple-400 p-2 rounded-xl">
+            <label for="mainCategory" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark
+                categories:</label>
+            <select v-model="form.mainCategory" id="mainCategory" name="mainCategory"
+                class="my-2 bg-purple-400 p-2 rounded-xl">
                 <option value="uncategorized" selected>Uncategorized</option>
-                <option v-for="bookmark in bookmarks.data" :key="bookmark.id" :value="bookmark.name">{{ bookmark.name }}</option>
+                <option v-for="bookmark in uniqueCategoriesComputed" :key="bookmark.id" :value="bookmark.name">{{
+                    bookmark.name }}</option>
             </select>
         </div>
         <div>
-            <label for="newCategories" class="block text-sm font-medium leading-6 text-purple-200 my-2">You can also add new categories. Separate them with a comma</label>
-            <input v-model="form.newCategories" type="text" id="newCategories" name="newCategories" placeholder="Add new categories separated by commas"
+            <label for="newCategories" class="block text-sm font-medium leading-6 text-purple-200 my-2">You can also add
+                new categories. Separate them with a comma</label>
+            <input v-model="form.newCategories" type="text" id="newCategories" name="newCategories"
+                placeholder="Add new categories separated by commas"
                 class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" @input="checkMainCategory" />
         </div>
         <div>

@@ -39,7 +39,7 @@ function submit() {
                     Avatar Url:
                     <p class="xl:max-w-[15%] text-justify text-xs">You don't need to change it, it is not required. You can keep the placeholder as your avatar.</p>
                 </label>
-                <input type="url" id="avatar" name="avatar" v-model="form.avatar" class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" min="20" max="500" required />
+                <input type="url" id="avatar" name="avatar" v-model="form.avatar" class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" min="20" max="200" required />
                 <p v-if="form.errors.avatar"class="text-xs text-purple-300 px-2 py-2 border-red-600">{{ form.errors.avatar }}</p>
                 </div>
 
