@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class BookmarkController extends Controller
@@ -41,9 +42,10 @@ class BookmarkController extends Controller
      */
     public function store()
     {
+
         request()->validate([
-            'name' => ['required', 'min:5', 'max:100'],
-            'url' => ['required', 'min:10', 'max:500']
+            'name' => ['required', 'min:5', 'max:100', 'string'],
+            'url' => ['required', 'min:10', 'max:500', 'string'],
         ]);
 
         $bookmark = Bookmark::create([
@@ -52,17 +54,28 @@ class BookmarkController extends Controller
             'user_id' => request('userId')
         ]);
 
-        $uncategorizedCategory = Category::firstOrCreate(['name' => 'uncategorized']);
+        if (request()->has('mainCategory') && request('mainCategory') !== null) {
 
-        $bookmark->categories()->attach($uncategorizedCategory);
+            $mainCategory = Category::firstOrCreate(['name' => request('mainCategory')]);
 
+            $bookmark->categories()->attach($mainCategory);
 
+        }
 
-
-
+        if (request()->has('newCategories') && is_array(request('newCategories'))) {
+            foreach (request('newCategories') as $newCategory) {
+                if (strlen($newCategory) < 3 || strlen($newCategory) > 50) {
+                    continue;
+                }
+                $category = Category::firstOrCreate(['name' => $newCategory]);
+                $bookmark->categories()->attach($category);
+            }
+        }
 
         return;
     }
+
+
 
     /**
      * Display the specified resource.
