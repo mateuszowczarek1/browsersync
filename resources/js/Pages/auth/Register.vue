@@ -12,12 +12,14 @@ const form = useForm({
     name: null,
     email: null,
     avatar: "https://picsum.photos/50/50",
-    password:null,
+    password: null,
 });
 
 function submit() {
     form.post('/register');
 }
+
+
 </script>
 <template>
     <Layout>
@@ -25,27 +27,32 @@ function submit() {
             <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
                 <FormSection>
                     <FormLabel label-for="name">Username:</FormLabel>
-                    <FormInput type="text" id="name" name="name" placeholder="Your Name" v-model="form.name" required min="8" max="100"/>
+                    <FormInput type="text" id="name" name="name" placeholder="Your Name"
+                        @updateForm="(value) => form.name = value" required min="8" max="100" />
                     <FormErrorMessage v-if="form.errors.name">{{ form.errors.name }}</FormErrorMessage>
                 </FormSection>
 
                 <FormSection>
                     <FormLabel label-for="email">Email:</FormLabel>
-                    <FormInput type="email" id="email" name="email" placeholder="Email address" v-model="form.email" required min="5" max="254"/>
+                    <FormInput type="email" id="email" name="email" placeholder="Email address" @updateForm="(value) => form.email = value"
+                        required min="5" max="254" />
                     <FormErrorMessage v-if="form.errors.email">{{ form.errors.email }}</FormErrorMessage>
                 </FormSection>
 
                 <FormSection>
                     <FormLabel label-for="avatar">Avatar Url:
-                    <p class="xl:max-w-[15%] md:max-w-[20%] text-justify text-xs">You don't need to change it, it is not required. You can keep the placeholder as your avatar.</p>
+                        <p class="xl:max-w-[15%] md:max-w-[20%] text-justify text-xs">You don't need to change it, it is
+                            not required. You can keep the placeholder as your avatar.</p>
                     </FormLabel>
-                    <FormInput type="url" id="avatar" name="avatar" v-model="form.avatar" min="20" max="200" required />
+                    <FormInput type="url" id="avatar" name="avatar" @updateForm="(value) => form.avatar = value" :value="form.avatar" min="20"
+                        max="200" required />
                     <FormErrorMessage v-if="form.errors.avatar">{{ form.errors.avatar }}</FormErrorMessage>
                 </FormSection>
 
                 <FormSection>
                     <FormLabel label-for="password">Password:</FormLabel>
-                    <FormInput type="password" id="password" name="password" v-model="form.password" required  min="5" max="100"/>
+                    <FormInput type="password" id="password" name="password" @updateForm="(value) => form.password = value" required min="5"
+                        max="100" />
                     <FormErrorMessage v-if="form.errors.password">{{ form.errors.password }}</FormErrorMessage>
                 </FormSection>
 

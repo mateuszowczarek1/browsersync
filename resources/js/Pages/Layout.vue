@@ -9,9 +9,10 @@ const auth = useAuthStore();
 
 <TheHeader :user="auth.user" />
 
-    <main class="text-default flex items-start gap-4 lg:flex-row flex-col mx-4">
-        <slot></slot>
-    </main>
+<main class="text-default grid lg:grid-cols-2 grid-cols-1 gap-4 mx-4">
+    <slot></slot>
+</main>
+
 
 <TheFooter />
 

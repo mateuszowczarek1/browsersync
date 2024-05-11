@@ -38,11 +38,11 @@ watch(() => __props.bookmarks, (newBookmarks) => {
 
 <template>
     <Layout>
-        <Panel v-if="bookmarks.data.length" title="Bookmarks">
+            <Panel v-if="bookmarks.data.length" title="Bookmarks">
             <span @click="filterByCategory = ''"
                 class="inline-block p-2 my-4 text-purple-300 bg-purple-300/10 rounded-xl px-2 hover:bg-purple-300/25 transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
                 all bookmarks</span>
-            <ul>
+            <ul class=" break-words">
                 <li v-for="bookmark in filteredBookmarks" :key="bookmark.id" class="mt-2">
                     <a :href="bookmark.url" target="_blank"
                         class="font-semibold text-lg hover:text-purple-400 transition-colors duration-300">{{
@@ -69,5 +69,6 @@ watch(() => __props.bookmarks, (newBookmarks) => {
         <Panel title="Add a bookmark">
             <AddBookmarkForm :user-id="auth.user.id" :bookmarks="bookmarks" />
         </Panel>
+
     </Layout>
 </template>

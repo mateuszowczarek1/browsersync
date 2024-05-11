@@ -24,12 +24,12 @@ function submit() {
 
                 <FormSection>
                     <FormLabel label-for="email">Email:</FormLabel>
-                    <FormInput type="email" id="email" name="email" placeholder="Email address" v-model="form.email" required min="5" max="254" />
+                    <FormInput type="email" id="email" name="email" placeholder="Email address" @updateForm="(value) => form.email = value" required min="5" max="254" />
                     <FormErrorMessage v-if="form.errors.email">{{ form.errors.email }}</FormErrorMessage>
                 </FormSection>
                 <FormSection>
                     <FormLabel label-for="password">Password:</FormLabel>
-                    <FormInput type="password" id="password" name="password" v-model="form.password" required min="5" max="100" />
+                    <FormInput type="password" id="password" name="password" @updateForm="(value) => form.password = value" required min="5" max="100" />
                     <FormErrorMessage v-if="form.errors.password">{{ form.errors.password }}</FormErrorMessage>
                 </FormSection>
                 <FormSection>
