@@ -17,14 +17,33 @@ class BookmarkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($paginate = false)
     {
         $user = Auth::user();
-        $bookmarks = $user->bookmarks()->with('categories')->latest()->paginate(15);
+        $query = $user->bookmarks()->with('categories')->latest();
+
+        if ($paginate) {
+            $bookmarks = $query->paginate(15);
+        } else {
+            $bookmarks = $query->get();
+        }
 
         $bookmarks->load('categories');
 
+        return ['bookmarks' => $bookmarks, 'user' => $user];
+    }
+
+    public function loadDashboard()
+    {
+        extract($this->index(true));
+
         return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
+    }
+
+    public function loadEdit()
+    {
+        extract($this->index());
+        return Inertia::render('auth/EditBookmarks', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
     /**
@@ -51,7 +70,7 @@ class BookmarkController extends Controller
         $bookmark = Bookmark::create([
             'name' => request('name'),
             'url' => request('url'),
-            'user_id' => request('userId')
+            'user_id' => Auth::user()->id
         ]);
 
         if (request()->has('mainCategory') && request('mainCategory') !== null) {
@@ -90,15 +109,42 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
-        //
+        $bookmark = $bookmark->load('categories');
+
+        if ($bookmark->user_id !== auth()->id()) {
+            abort(403, 'This bookmark does not belong to you. Go back now!');
+        }
+
+        return Inertia::render('auth/ShowBookmark', ['bookmark' => $bookmark, 'user_id' => Auth::user()->id]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookmarkRequest $request, Bookmark $bookmark)
+    public function update(Bookmark $bookmark)
     {
-        //
+        if ($bookmark->user_id !== Auth::user()->id) {
+            abort(403, 'This bookmark does not belong to you. Go back now!');
+        }
+
+        request()->validate([
+            'name' => ['required', 'min:5', 'max:100', 'string'],
+            'url' => ['required', 'min:10', 'max:500', 'string'],
+        ]);
+
+        $bookmark->categories()->detach();
+
+        foreach (request('categories') as $newCategory) {
+            if (strlen($newCategory) < 3 || strlen($newCategory) > 50) {
+                continue;
+            }
+            $category = Category::firstOrCreate(['name' => $newCategory]);
+            $bookmark->categories()->attach($category);
+        }
+
+        $bookmark->update(['name' => request('name'), 'url' => request('url')]);
+
+        return to_route('list-bookmarks');
     }
 
     /**
@@ -106,6 +152,12 @@ class BookmarkController extends Controller
      */
     public function destroy(Bookmark $bookmark)
     {
-        //
+        if ($bookmark->user_id !== Auth::user()->id) {
+            abort(403, 'This bookmark does not belong to you. Go back now!');
+        }
+
+        $bookmark->delete();
+
+        return to_route('list-bookmarks');
     }
 }

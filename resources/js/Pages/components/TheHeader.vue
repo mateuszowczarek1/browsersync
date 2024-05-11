@@ -15,12 +15,11 @@ defineProps({
                 <Link href="/" method="get"><i class="fa fa-home"></i> Home Page</Link>
             </div>
             <div class="xl:mb-0 space-x-4 font-semibold  xl:ml-4">
-                <a href="#"
-                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Home</a>
-                <a href="#"
-                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Home</a>
-                <a href="#"
-                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Home</a>
+                <Link href="#" method="get"
+                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Create list</Link>
+
+                <Link href="/bookmarks" method="get"
+                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Edit Bookmarks</Link>
             </div>
             <div
                 class="xl:ml-auto xl:mt-0 mt-3 flex md:flex-row flex-col gap-4 items-center bg-white/20 xl:px-4 py-2 rounded-xl">
@@ -29,9 +28,9 @@ defineProps({
                             class="rounded border-2 border-white/50 h-[50px] mx-auto" /></div>
 
                     <p class="font-sm">{{ user.name }}</p>
-                    <Link href="/dashboard" method="get" as="button" type="button"
+                    <Link href="/user" method="get" as="button" type="button"
                         class="border-2 py-1 px-2 rounded-xl border-purple-400 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
-                    Dashboard</Link>
+                    User Profile</Link>
                     <Link @click="auth.clearUser()" href="/logout" method="post" as="button" type="button"
                         class="border-2 py-1 px-2 rounded-xl border-purple-600 xl:mx-2 mx-2 my-1 hover:bg-white/15 transition-colors duration-300 bg-white/5">
                     Logout</Link>

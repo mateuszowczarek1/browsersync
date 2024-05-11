@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 
@@ -19,7 +21,7 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect('/');
+        return to_route('Home');
     }
 
     public function store()
@@ -36,5 +38,29 @@ class SessionController extends Controller
         request()->session()->regenerate();
 
         return to_route('dashboard');
+    }
+
+    public function update(){
+        $user = Auth::user();
+        $validatedAttributes = request()->validate([
+            'name' => ['required', 'string', 'max:100', 'min:8'],
+            'avatar' => ['required', 'string', 'min:20', 'max:2000'],
+            'password' => ['required', Password::min(5)->max(100)],
+        ]);
+
+        if (isset($validatedAttributes['password'])) {
+            $user->password = Hash::make($validatedAttributes['password']);
+        }
+
+        $user-> name = $validatedAttributes['name'];
+        $user->avatar = $validatedAttributes['avatar'];
+
+        $user->save();
+
+        return to_route('Home');
+    }
+
+    public function show(){
+        return Inertia::render("auth/EditUser", ['user' => Auth::user()]);
     }
 }

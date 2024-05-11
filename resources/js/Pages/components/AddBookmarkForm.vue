@@ -3,14 +3,12 @@ import { useForm } from '@inertiajs/vue3';
 import { computed, watch, ref, onMounted } from 'vue';
 
 defineProps({
-    userId: Number,
     bookmarks: Object
 });
 
 const form = useForm({
     url: null,
     name: null,
-    userId: __props.userId,
     mainCategory: 'uncategorized',
     newCategories: '',
 });
@@ -100,6 +98,5 @@ onMounted(() => updateUniqueCategories(__props.bookmarks));
                 class="bg-purple-900 text-white p-2 rounded-xl my-4 border-2 border-transparent hover:border-purple-100 transition-colors duration-300">Add
                 a bookmark</button>
         </div>
-        <input type="hidden" id="userId" name="userId" :value="userId" />
     </form>
 </template>

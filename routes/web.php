@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('Home');
 
 
-Route::get('/dashboard', [BookmarkController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard', [BookmarkController::class, 'loadDashboard'])->name('dashboard')->middleware('auth');
 
 #Auth
 Route::get('/register', [RegisteredUserController::class, 'create']);
@@ -27,6 +27,15 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 
+#User Profile
+
+Route::get('/user', [SessionController::class, 'show'])->middleware('auth');
+Route::put('/user', [SessionController::class, 'update'])->middleware('auth');
+
 
 #Bookmarks
 Route::post('/bookmarks/add', [BookmarkController::class, 'store'])->middleware('auth');
+Route::get('/bookmarks', [BookmarkController::class, 'loadEdit'])->middleware('auth')->name('list-bookmarks');
+Route::get('/bookmarks/{bookmark}', [BookmarkController::class, 'edit'])->middleware('auth');
+Route::patch('/bookmarks/{bookmark}', [BookmarkController::class, 'update'])->middleware('auth');
+Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->middleware('auth');
