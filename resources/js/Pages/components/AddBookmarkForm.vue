@@ -59,8 +59,6 @@ const uniqueCategoriesComputed = computed(() => {
 });
 
 onMounted(() => updateUniqueCategories(__props.bookmarks));
-
-console.log(__props.bookmarks)
 </script>
 
 <template>
@@ -81,7 +79,8 @@ console.log(__props.bookmarks)
         </div>
         <div>
             <label for="mainCategory" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark
-                categories:</label>
+                categories:
+            <p class="text-[0.7rem]">List of 15 categories from the currently opened page.</p></label>
             <select v-model="form.mainCategory" id="mainCategory" name="mainCategory"
                 class="my-2 bg-purple-400 p-2 rounded-xl">
                 <option value="uncategorized" selected>Uncategorized</option>
