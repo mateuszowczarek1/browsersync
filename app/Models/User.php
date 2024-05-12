@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Bookmark::class);
     }
+
+    public function catalogues(): HasMany
+    {
+        return $this->hasMany(Catalogue::class);
+    }
 }

@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Bookmark extends Model
+class Catalogue extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function categories()
+    public function bookmarks(): HasMany
     {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function catalogues()
-    {
-        return $this->belongsToMany(Catalogue::class);
+        return $this->hasMany(Bookmark::class);
     }
 }

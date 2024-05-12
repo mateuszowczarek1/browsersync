@@ -23,7 +23,7 @@ function submit() {
 </script>
 <template>
     <Layout>
-        <Panel title="Create a new user">
+        <Panel title="Create a new user" class="col-span-2">
             <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
                 <FormSection>
                     <FormLabel label-for="name">Username:</FormLabel>

@@ -53,7 +53,7 @@ function submit(){
                     <FormErrorMessage v-if="form.errors.categories">{{ form.errors.categories }}</FormErrorMessage>
                 </FormSection>
                 <FormSection>
-                    <SubmitButton>Edit User</SubmitButton>
+                    <SubmitButton>Edit Bookmark</SubmitButton>
                 </FormSection>
             </form>
             <Link :href="`/bookmarks/${bookmark.id}`" method="delete">🗑️ Delete this bookmark</Link>

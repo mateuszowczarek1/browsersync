@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,6 @@ Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 
 #User Profile
-
 Route::get('/user', [SessionController::class, 'show'])->middleware('auth');
 Route::put('/user', [SessionController::class, 'update'])->middleware('auth');
 
@@ -39,3 +39,10 @@ Route::get('/bookmarks', [BookmarkController::class, 'loadEdit'])->middleware('a
 Route::get('/bookmarks/{bookmark}', [BookmarkController::class, 'edit'])->middleware('auth');
 Route::patch('/bookmarks/{bookmark}', [BookmarkController::class, 'update'])->middleware('auth');
 Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->middleware('auth');
+
+
+# Catalogues
+Route::get('/catalogues', [CatalogueController::class, 'index'])->middleware('auth')->name('list-catalogues');
+Route::get('/catalogues/add', [CatalogueController::class, 'create'])->middleware('auth');
+Route::post('/catalogues/add', [CatalogueController::class, 'store'])->middleware('auth');
+

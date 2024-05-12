@@ -20,9 +20,8 @@ return new class extends Migration {
 
         Schema::create('bookmark_category', function (Blueprint $table) {
             $table->id();
-            // Ensure both foreign key and referenced column have the same data type
             $table->foreignIdFor(Category::class, 'category_id')->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Bookmark::class)->constrained()->onDelete('cascade'); // Update constraint syntax
+            $table->foreignIdFor(Bookmark::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

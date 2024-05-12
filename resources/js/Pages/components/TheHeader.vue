@@ -15,8 +15,8 @@ defineProps({
                 <Link href="/" method="get"><i class="fa fa-home"></i> Home Page</Link>
             </div>
             <div class="xl:mb-0 space-x-4 font-semibold  xl:ml-4">
-                <Link href="#" method="get"
-                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Create list</Link>
+                <Link href="/catalogues" method="get"
+                    class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Manage catalogues</Link>
 
                 <Link href="/bookmarks" method="get"
                     class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">Edit Bookmarks</Link>

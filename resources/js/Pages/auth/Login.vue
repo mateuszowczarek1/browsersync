@@ -19,7 +19,7 @@ function submit() {
 </script>
 <template>
     <Layout>
-        <Panel title="Log in">
+        <Panel title="Log in" class="col-span-2">
             <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
 
                 <FormSection>

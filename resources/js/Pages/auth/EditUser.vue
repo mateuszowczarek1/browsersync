@@ -29,7 +29,7 @@ function submit() {
 </script>
 <template>
     <Layout>
-        <Panel title="Edit user Info">
+        <Panel title="Edit user Info" class="col-span-2">
             <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
 
                 <FormSection>
@@ -51,9 +51,6 @@ function submit() {
                     <SubmitButton>Edit User</SubmitButton>
                 </FormSection>
             </form>
-        </Panel>
-        <Panel title="How to do it...">
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ullam, quaerat voluptates doloremque quo quos quasi explicabo distinctio, quis in eligendi beatae dolor animi, quas officia porro blanditiis maiores impedit.</div>
         </Panel>
     </Layout>
 </template>

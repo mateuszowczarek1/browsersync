@@ -67,11 +67,7 @@ class BookmarkController extends Controller
             'url' => ['required', 'min:10', 'max:500', 'string'],
         ]);
 
-        $bookmark = Bookmark::create([
-            'name' => request('name'),
-            'url' => request('url'),
-            'user_id' => Auth::user()->id
-        ]);
+       $bookmark = Auth::user()->bookmarks()->create(['name' => request('name'), 'url' => request('url')]);
 
         if (request()->has('mainCategory') && request('mainCategory') !== null) {
 

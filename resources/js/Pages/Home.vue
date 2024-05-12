@@ -5,17 +5,7 @@ import Panel from './components/Panel.vue';
 
 <template>
     <Layout>
-        <Panel title="Section one">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et
-            inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente
-            non!
-        </Panel>
-        <Panel title="Section two">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et
-            inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente
-            non!
-        </Panel>
-        <Panel title="Section three">
+        <Panel title="Section one" class="col-span-2">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus id dolor animi nisi velit repudiandae et
             inventore enim est pariatur excepturi vero recusandae incidunt necessitatibus facere quis ducimus, sapiente
             non!
