@@ -6,10 +6,9 @@ import Panel from './components/Panel.vue';
 <template>
     <Layout>
         <Panel title="Hello!" class="col-span-2">
-            <div class="flex gap-5 items-center">
-                <img src="images/robin.jpg" alt="robin" width="300px"
-                     class="rounded-xl border border-4 border-e-purple-400"/>
-                <div class="text-xl text-justify mx-20 p-2 space-y-10 break-words">
+            <div class="flex gap-8 p-2 items-center justify-center flex-col">
+
+                <div class="text-xl text-justify space-y-5 break-words">
                     <p>Introducing our sleek bookmark management platform! Our app provides a streamlined solution for
                         organizing and managing all your bookmarks one convenient location. Bid farewell to cluttered
                         browse bookmarks and embrace seamless organization!
@@ -35,6 +34,10 @@ import Panel from './components/Panel.vue';
                         clutter
                         – welcome to the future of bookmark organization!
                     </p>
+                </div>
+                <div>
+                    <img src="images/robin.jpg" alt="robin"
+                         class="rounded-xl border border-4 border-e-purple-400 sm:w-[100%] lg:w-[30%] mx-auto"/>
                 </div>
             </div>
         </Panel>
