@@ -24,7 +24,7 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->middleware
 
 Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
-Route::post('/logout', [SessionController::class, 'destroy'])->middleware('guest');
+Route::delete('/logout', [SessionController::class, 'destroy']);
 
 #User Profile
 Route::get('/user', [SessionController::class, 'show'])->middleware('auth');
@@ -41,6 +41,10 @@ Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->
 
 # Catalogues
 Route::get('/catalogues', [CatalogueController::class, 'index'])->middleware('auth')->name('list-catalogues');
-Route::get('/catalogues/add', [CatalogueController::class, 'create'])->middleware('auth');
+Route::get('/catalogues/add', [CatalogueController::class, 'create'])->middleware('auth')->name('create-catalogue');
+Route::get('/catalogues/{catalogue}', [CatalogueController::class, 'show']);
 Route::post('/catalogues/add', [CatalogueController::class, 'store'])->middleware('auth');
+Route::get('/catalogues/edit/{catalogue}', [CatalogueController::class, 'edit'])->middleware('auth');
+Route::put('/catalogues/edit/{catalogue}', [CatalogueController::class, 'update'])->middleware('auth');
+Route::delete('/catalogues/edit/{catalogue}', [CatalogueController::class, 'destroy'])->middleware('auth');
 

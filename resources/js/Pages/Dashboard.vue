@@ -18,6 +18,7 @@ const {user} = __props;
 const auth = useAuthStore();
 if (user) {
     auth.setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
 }
 
 const filterByCategory = ref('');
@@ -37,6 +38,8 @@ watch(() => __props.bookmarks, (newBookmarks) => {
         filteredBookmarks.value = newBookmarks.data;
     }
 }, {deep: true});
+
+
 </script>
 
 <template>

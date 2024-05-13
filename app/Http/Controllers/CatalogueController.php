@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCatalogueRequest;
 use App\Http\Requests\UpdateCatalogueRequest;
 use App\Models\Catalogue;
+use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -53,7 +55,15 @@ class CatalogueController extends Controller
      */
     public function show(Catalogue $catalogue)
     {
-        //
+
+
+        $catalogue = $catalogue->load(['user', 'bookmarks']);
+
+        if (!$catalogue->is_published) {
+            $catalogue->bookmarks = null;
+        }
+
+        return Inertia::render('catalogues/ShowCatalogue', ['catalogue' => $catalogue]);
     }
 
     /**
@@ -61,15 +71,42 @@ class CatalogueController extends Controller
      */
     public function edit(Catalogue $catalogue)
     {
-        //
+        $user = Auth::user()->load('bookmarks');
+
+        if ($user->id !== $catalogue->user_id) {
+            abort(403, 'This catalogue does not belong to you. Go back now!');
+        }
+
+        return Inertia::render('catalogues/EditCatalogue', ['catalogue' => $catalogue->load('bookmarks'), 'bookmarks' => $user->bookmarks]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCatalogueRequest $request, Catalogue $catalogue)
+    public function update(Catalogue $catalogue)
     {
-        //
+        $user = Auth::user();
+
+        if ($user->id !== $catalogue->user_id) {
+            abort(403, 'This catalogue does not belong to you. Go back now!');
+        }
+
+        $validatedAttributes = request()->validate([
+            'name' => ['required', 'min:5', 'max:150', 'string'],
+            'is_published' => ['required', 'boolean'],
+        ]);
+
+        $catalogue->update($validatedAttributes);
+        $catalogue->bookmarks()->detach();
+
+        foreach (request('bookmarks') as $bookmarkId) {
+            $catalogue->bookmarks()->attach($bookmarkId);
+        }
+
+    $catalogue->save();
+
+        return to_route('list-catalogues');
     }
 
     /**
@@ -77,6 +114,14 @@ class CatalogueController extends Controller
      */
     public function destroy(Catalogue $catalogue)
     {
-        //
+        $user = Auth::user();
+
+        if ($user->id !== $catalogue->user_id) {
+            abort(403, 'This catalogue does not belong to you. Go back now!');
+        }
+
+        $catalogue->delete();
+
+        return to_route('list-catalogues');
     }
 }
