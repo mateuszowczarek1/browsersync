@@ -10,7 +10,7 @@ defineProps({
 </script>
 <template>
     <header class="text-center bg-white/10 mx-4 rounded-xl xl:p-2 mb-4 mt-2 h-auto">
-        <nav class="flex items-center flex-wrap xl:flex-row flex-col xl:gap-0">
+        <nav class="flex items-center flex-wrap xl:flex-row flex-col  xl:gap-0 text-purple-200">
             <div
                 class="text-2xl xl:border-r-2 border-white/15 pr-2 hover:bg-white/20 p-2 rounded transition-colors duration-300 font-bold">
                 <Link href="/" method="get"><i class="fa fa-home"></i> Home Page</Link>
@@ -24,7 +24,6 @@ defineProps({
                       class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">
                     Your catalogues
                 </Link>
-
                 <Link href="/catalogues/add" method="get"
                       class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">
                     Create a catalogue
@@ -56,7 +55,6 @@ defineProps({
                         Register
                     </Link>
                 </div>
-
             </div>
         </nav>
 

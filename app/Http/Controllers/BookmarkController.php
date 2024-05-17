@@ -17,27 +17,11 @@ class BookmarkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($paginate = false)
+    public function index()
     {
         $user = Auth::user();
-        $query = $user->bookmarks()->with('categories')->latest();
-
-        if ($paginate) {
-            $bookmarks = $query->paginate(15);
-        } else {
-            $bookmarks = $query->get();
-        }
-
-        $bookmarks->load('categories');
-
+        $bookmarks = $user->bookmarks()->with('categories')->latest()->get();
         return ['bookmarks' => $bookmarks, 'user' => $user];
-    }
-
-    public function loadDashboard()
-    {
-        extract($this->index(true));
-
-        return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
     public function loadEdit()
@@ -46,19 +30,12 @@ class BookmarkController extends Controller
         return Inertia::render('auth/EditBookmarks', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function loadDashboard()
     {
-
-
-
+        extract($this->index());
+        return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store()
     {
 
@@ -67,7 +44,7 @@ class BookmarkController extends Controller
             'url' => ['required', 'min:10', 'max:500', 'string'],
         ]);
 
-       $bookmark = Auth::user()->bookmarks()->create(['name' => request('name'), 'url' => request('url')]);
+        $bookmark = Auth::user()->bookmarks()->create(['name' => request('name'), 'url' => request('url')]);
 
         if (request()->has('mainCategory') && request('mainCategory') !== null) {
 
@@ -89,7 +66,6 @@ class BookmarkController extends Controller
 
         return;
     }
-
 
 
     /**

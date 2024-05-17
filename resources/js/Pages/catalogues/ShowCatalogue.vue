@@ -24,10 +24,10 @@ const auth = useAuthStore();
             <h3 class="text-xl font-semibold">Created at: {{ parsedDate}}</h3>
             <h4 class="text-xl font-semibold">Is published: {{catalogue.is_published ? 'Made public' : 'Private' }}</h4>
             <div class="border-t-2 border-dashed py-2 text-left">
-                <ul v-for="bookmark in catalogue.bookmarks" class="my-5  mx-4 text-break">
-                    <li class="rounded-xl bg-purple-950 p-4 transition-colors duration-1000 hover:bg-purple-700" >
+                <ul v-for="bookmark in catalogue.bookmarks" class="my-5 mx-4 break-words">
+                    <li class="rounded-xl bg-purple-950 p-4 transition-colors duration-1000 hover:bg-purple-700 " >
                     Link: <BookmarkLink :bookmark="bookmark" key="bookmark.id" />
-                    <p class="mt-2 cursor-copy" @click="copy(bookmark.url)"><strong>URL Plaintext:</strong> {{bookmark.url}}</p>
+                    <p class="mt-2 cursor-copy border-purple-600 border-t text-purple-400" @click="copy(bookmark.url)"><strong>URL Plaintext:</strong> {{bookmark.url}}</p>
                     </li>
                 </ul>
             </div>

@@ -1,6 +1,6 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import { computed, watch, ref, onMounted } from 'vue';
+import {useForm} from '@inertiajs/vue3';
+import {computed, watch, ref, onMounted} from 'vue';
 
 defineProps({
     bookmarks: Object
@@ -33,7 +33,7 @@ const uniqueCategories = ref([]);
 function updateUniqueCategories(bookmarks) {
     const categorySet = new Set();
 
-    bookmarks.data.forEach(bookmark => {
+    bookmarks.forEach(bookmark => {
         bookmark.categories.forEach(category => {
             if (Array.isArray(category)) {
                 category.forEach(subCategory => {
@@ -45,7 +45,7 @@ function updateUniqueCategories(bookmarks) {
         });
     });
 
-    uniqueCategories.value = Array.from(categorySet).map((el, i) => ({ id: i, name: el }));
+    uniqueCategories.value = Array.from(categorySet).map((el, i) => ({id: i, name: el}));
 };
 
 watch(() => __props.bookmarks, () => {
@@ -64,39 +64,44 @@ onMounted(() => updateUniqueCategories(__props.bookmarks));
         <div>
             <label for="url" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark Url:</label>
             <input v-model="form.url" type="url" id="url" name="url" placeholder="https://example.com"
-                class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" required min="10" max="500" />
+                   class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" required min="10" max="500"/>
             <p v-if="form.errors.url" class="text-xs text-purple-300 px-2 py-2 border-red-600">{{ form.errors.url }}</p>
         </div>
         <div>
             <label for="name" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark name:</label>
             <input v-model="form.name" type="text" id="name" name="name"
-                class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" placeholder="the best website" required
-                min="5" max="100" />
+                   class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" placeholder="the best website"
+                   required
+                   min="5" max="100"/>
             <p v-if="form.errors.name" class="text-xs text-purple-300 px-2 py-2 border-red-600">{{ form.errors.name }}
             </p>
         </div>
         <div>
             <label for="mainCategory" class="block text-sm font-medium leading-6 text-purple-200 my-2">Bookmark
                 categories:
-            <p class="text-[0.7rem]">List of 15 categories from the currently opened page.</p></label>
+                <p class="text-[0.7rem]">List of previously added categories.</p></label>
             <select v-model="form.mainCategory" id="mainCategory" name="mainCategory"
-                class="my-2 bg-purple-400 p-2 rounded-xl">
+                    class="my-2 bg-purple-400 p-2 rounded-xl">
                 <option value="uncategorized" selected>Uncategorized</option>
                 <option v-for="bookmark in uniqueCategoriesComputed" :key="bookmark.id" :value="bookmark.name">{{
-                    bookmark.name }}</option>
+                        bookmark.name
+                    }}
+                </option>
             </select>
         </div>
         <div>
             <label for="newCategories" class="block text-sm font-medium leading-6 text-purple-200 my-2">You can also add
                 new categories. Separate them with a comma</label>
             <input v-model="form.newCategories" type="text" id="newCategories" name="newCategories"
-                placeholder="Add new categories separated by commas"
-                class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" @input="checkMainCategory" />
+                   placeholder="Add new categories separated by commas"
+                   class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" @input="checkMainCategory"/>
         </div>
         <div>
             <button type="submit"
-                class="bg-purple-900 text-white p-2 rounded-xl my-4 border-2 border-transparent hover:border-purple-100 transition-colors duration-300">Add
-                a bookmark</button>
+                    class="bg-purple-900 text-white p-2 rounded-xl my-4 border-2 border-transparent hover:border-purple-100 transition-colors duration-300">
+                Add
+                a bookmark
+            </button>
         </div>
     </form>
 </template>

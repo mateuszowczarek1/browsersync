@@ -10,11 +10,11 @@ defineProps({
     <Layout>
   <Panel title="Your bookmark catalogues" class="col-span-2">
 <div v-if="user.catalogues.length">
-<div class="flex gap-4 font-semibold cursor-pointer flex-wrap text-center">
+<div class="flex font-semibold cursor-pointer flex-wrap text-center">
     <span v-for="catalogue in user.catalogues" class="inline-block p-2 border-2 rounded-xl my-4 mx-2 hover:bg-white/15">
         <Link :href="`/catalogues/${catalogue.id}`">{{ catalogue.name}}</Link>
     </span>
- <div>
+ <div class="border-purple-600 border-t">
      <Link href="/catalogues/add" method="GET" class="rounded-xl cursor-pointer font-semibold inline-block p-2 my-4 mx-2 hover:bg-white/15 border-2 bg-purple-600">Create a new catalogue</Link>
  </div>
 </div>
