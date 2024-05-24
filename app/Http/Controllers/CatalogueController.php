@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCatalogueRequest;
-use App\Http\Requests\UpdateCatalogueRequest;
 use App\Models\Catalogue;
-use DateTime;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
