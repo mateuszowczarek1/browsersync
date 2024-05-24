@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -81,12 +82,10 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
-        $bookmark = $bookmark->load('categories');
-
-        if ($bookmark->user_id !== auth()->id()) {
+        if (! Gate::allows('edit-bookmark', $bookmark)) {
             abort(403, 'This bookmark does not belong to you. Go back now!');
         }
-
+        $bookmark = $bookmark->load('categories');
         return Inertia::render('auth/ShowBookmark', ['bookmark' => $bookmark, 'user_id' => Auth::user()->id]);
     }
 
@@ -95,7 +94,7 @@ class BookmarkController extends Controller
      */
     public function update(Bookmark $bookmark)
     {
-        if ($bookmark->user_id !== Auth::user()->id) {
+        if (! Gate::allows('edit-bookmark', $bookmark)) {
             abort(403, 'This bookmark does not belong to you. Go back now!');
         }
 
