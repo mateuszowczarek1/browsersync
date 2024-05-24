@@ -1,6 +1,6 @@
 <script setup>
-import {useAuthStore} from '../store/userStore';
-import {computed, ref, watch} from 'vue';
+import { useAuthStore } from '../store/userStore';
+import { computed, ref, watch } from 'vue';
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
 import AddBookmarkForm from './components/AddBookmarkForm.vue';
@@ -16,7 +16,7 @@ defineProps({
     bookmarks: Object
 });
 
-const {user} = __props;
+const { user } = __props;
 const auth = useAuthStore();
 
 if (user) {
@@ -28,22 +28,39 @@ if (user) {
 }
 
 const filterByCategory = ref('');
+const tempQuery = ref('');
+const query = ref('');
 
 const filteredBookmarks = computed(() => {
-    if (!filterByCategory.value) {
-        return __props.bookmarks;
-    } else {
-        return __props.bookmarks.filter(bookmark =>
+    let filtered = __props.bookmarks;
+    if (filterByCategory.value) {
+        filtered = filtered.filter(bookmark =>
             bookmark.categories.some(cat => cat.name === filterByCategory.value)
         );
     }
+    if (query.value) {
+        const regex = new RegExp(query.value, 'i');
+        filtered = filtered.filter(bookmark => regex.test(bookmark.name));
+    }
+    return filtered;
 });
 
 watch(() => __props.bookmarks, (newBookmarks) => {
     if (!filterByCategory.value) {
         filteredBookmarks.value = newBookmarks.data;
     }
-}, {deep: true});
+}, { deep: true });
+
+function searchByName() {
+filterByCategory.value = '';
+query.value = tempQuery.value;
+}
+
+function clearSearches() {
+filterByCategory.value = '';
+query.value = '';
+tempQuery.value = '';
+}
 
 
 </script>
@@ -51,28 +68,28 @@ watch(() => __props.bookmarks, (newBookmarks) => {
 <template>
     <Layout>
         <Panel v-if="bookmarks.length" title="Bookmarks">
-            <form action="/search">
+
+            <form @submit.prevent="searchByName">
                 <FormSection>
-                <FormInput type="text" name="q" id="q" />
+                    <FormInput type="text" name="q" id="q" @updateForm="(value) => tempQuery = value"  />
                 </FormSection>
                 <FormSection />
                 <SubmitButton>Search</SubmitButton>
                 <FormSection />
             </form>
-            <span @click="filterByCategory = ''"
-                  class="inline-block p-2 my-4 text-purple-300 bg-purple-300/10 rounded-xl px-2 hover:bg-purple-300/25 transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
+            <span @click="clearSearches"
+                class="inline-block p-2 my-4 text-purple-300 bg-purple-300/10 rounded-xl px-2 hover:bg-purple-300/25 transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
                 all bookmarks</span>
             <ul class=" break-words">
                 <li v-for="bookmark in filteredBookmarks" :key="bookmark.id" class="mt-2 text-left">
-                    <BookmarkLink :bookmark="bookmark"/>
-                    <BookmarkPlaintext :bookmark="bookmark"/>
+                    <BookmarkLink :bookmark="bookmark" />
+                    <BookmarkPlaintext :bookmark="bookmark" />
                     <div class="flex gap-2 flex-wrap mt-2 border-b border-purple-600">
                         <BookmarkCategory v-for="category in bookmark.categories"
-                                          @click="filterByCategory = category.name"
-                                          :key="category.id" :category="category">{{ category.name }}
+                            @click="filterByCategory = category.name" :key="category.id" :category="category">{{
+                            category.name }}
                         </BookmarkCategory>
                     </div>
-
                 </li>
             </ul>
         </Panel>
@@ -80,8 +97,7 @@ watch(() => __props.bookmarks, (newBookmarks) => {
             <p><strong>Add them any time you want to!</strong></p>
         </Panel>
         <Panel title="Add a bookmark">
-            <AddBookmarkForm :bookmarks="bookmarks"/>
+            <AddBookmarkForm :bookmarks="bookmarks" />
         </Panel>
-
     </Layout>
 </template>
