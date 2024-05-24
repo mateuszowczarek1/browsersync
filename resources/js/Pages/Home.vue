@@ -1,6 +1,9 @@
 <script setup>
+import {useAuthStore} from '../store/userStore';
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
+const auth = useAuthStore();
+auth.clearUser();
 </script>
 
 <template>

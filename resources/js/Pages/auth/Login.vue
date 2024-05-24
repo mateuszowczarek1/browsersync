@@ -1,5 +1,6 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3'
+import {useAuthStore} from '../../store/userStore';
 import Layout from '../Layout.vue';
 import Panel from '../components/Panel.vue';
 import FormSection from '../components/FormSection.vue';
@@ -7,6 +8,9 @@ import FormLabel from '../components/FormLabel.vue';
 import FormErrorMessage from '../components/FormErrorMessage.vue';
 import SubmitButton from '../components/SubmitButton.vue';
 import FormInput from '../components/FormInput.vue';
+
+const auth = useAuthStore();
+auth.clearUser();
 
 const form = useForm({
     email: null,
@@ -16,6 +20,8 @@ const form = useForm({
 function submit() {
     form.post('/login');
 }
+
+
 </script>
 <template>
     <Layout>
