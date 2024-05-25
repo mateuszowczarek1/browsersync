@@ -41,8 +41,8 @@ const auth = useAuthStore();
                     You own this catalogue.
                 </div>
                 <div class="flex flex-wrap gap-4">
-                    <Link :href="`/catalogues/edit/${catalogue.id}`" method="get" class="py-2 px-4 rounded-xl bg-purple-700 inline-block cursor-pointer hover:bg-purple-600 transition-colors duration-400 mx-4 mb-5">Edit it here</Link>
-                    <Link :href="`/catalogues/edit/${catalogue.id}`" method="delete" class="py-2 px-4 rounded-xl bg-purple-700 inline-block cursor-pointer hover:bg-purple-600 transition-colors duration-400 mx-4 mb-5"> Or delete it here</Link>
+                    <Link :href="`/catalogues/edit/${catalogue.id}`" as="button" method="get" class="py-2 px-4 rounded-xl bg-purple-700 inline-block cursor-pointer hover:bg-purple-600 transition-colors duration-400 mx-4 mb-5">Edit it here</Link>
+                    <Link :href="`/catalogues/edit/${catalogue.id}`" as="button" method="delete" class="py-2 px-4 rounded-xl bg-purple-700 inline-block cursor-pointer hover:bg-purple-600 transition-colors duration-400 mx-4 mb-5"> Or delete it here</Link>
                 </div>
 
 

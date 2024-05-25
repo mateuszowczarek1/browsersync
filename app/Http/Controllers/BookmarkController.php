@@ -18,23 +18,33 @@ class BookmarkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($paginate = false)
     {
         $user = Auth::user();
-        $bookmarks = $user->bookmarks()->with('categories')->latest()->get();
+        $query = $user->bookmarks()->with('categories')->latest();
+
+        if ($paginate) {
+            $bookmarks = $query->paginate(15);
+        } else {
+            $bookmarks = $query->get();
+        }
+
+        $bookmarks->load('categories');
+
         return ['bookmarks' => $bookmarks, 'user' => $user];
+    }
+
+    public function loadDashboard()
+    {
+        extract($this->index(false));
+
+        return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
     public function loadEdit()
     {
         extract($this->index());
         return Inertia::render('auth/EditBookmarks', ['bookmarks' => $bookmarks, 'user' => $user]);
-    }
-
-    public function loadDashboard()
-    {
-        extract($this->index());
-        return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
     public function store()
@@ -52,7 +62,6 @@ class BookmarkController extends Controller
             $mainCategory = Category::firstOrCreate(['name' => request('mainCategory')]);
 
             $bookmark->categories()->attach($mainCategory);
-
         }
 
         if (request()->has('newCategories') && is_array(request('newCategories'))) {
@@ -74,7 +83,6 @@ class BookmarkController extends Controller
      */
     public function show(Bookmark $bookmark)
     {
-
     }
 
     /**
@@ -82,7 +90,7 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
-        if (! Gate::allows('edit-bookmark', $bookmark)) {
+        if (!Gate::allows('edit-bookmark', $bookmark)) {
             abort(403, 'This bookmark does not belong to you. Go back now!');
         }
         $bookmark = $bookmark->load('categories');
@@ -94,7 +102,7 @@ class BookmarkController extends Controller
      */
     public function update(Bookmark $bookmark)
     {
-        if (! Gate::allows('edit-bookmark', $bookmark)) {
+        if (!Gate::allows('edit-bookmark', $bookmark)) {
             abort(403, 'This bookmark does not belong to you. Go back now!');
         }
 
