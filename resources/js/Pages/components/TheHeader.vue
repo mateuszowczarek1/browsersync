@@ -13,18 +13,18 @@ defineProps({
         <nav class="flex items-center flex-wrap xl:flex-row flex-col  xl:gap-0 text-purple-200">
             <div
                 class="text-2xl xl:border-r-2 border-white/15 pr-2 hover:bg-white/20 p-2 rounded transition-colors duration-300 font-bold">
-                <Link href="/" method="get"><i class="fa fa-home"></i> Home Page</Link>
+                <Link href="/" method="get" as="button"><i class="fa fa-home"></i> Home Page</Link>
             </div>
             <div class="xl:mb-0 space-x-4 font-semibold  xl:ml-4">
-                <Link href="/bookmarks" method="get"
+                <Link href="/bookmarks" method="get" as="button"
                       class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">
                     Edit Bookmarks
                 </Link>
-                <Link href="/catalogues" method="get"
+                <Link href="/catalogues" method="get" as="button"
                       class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">
                     Your catalogues
                 </Link>
-                <Link href="/catalogues/add" method="get"
+                <Link href="/catalogues/add" method="get" as="button"
                       class="xl:border border-transparent xl:hover:border-purple-300 transition-colors duration-300 p-2 rounded-xl sm:border-none md:border-none md:hover:bg-transparent sm:hover:bg-transparent xl:hover:bg-purple-400">
                     Create a catalogue
                 </Link>

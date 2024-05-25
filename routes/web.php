@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CatalogueController;
+use App\Http\Controllers\RefreshCategoriesController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
@@ -12,7 +13,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     if (Auth::user()) {
         return to_route('dashboard');
-    }
+}
     return Inertia::render('Home', [
         'user' => Auth::user(),
     ]);
@@ -38,7 +39,8 @@ Route::get('/bookmarks', [BookmarkController::class, 'loadEdit'])->middleware('a
 Route::get('/bookmarks/{bookmark}', [BookmarkController::class, 'edit'])->middleware('auth');
 Route::patch('/bookmarks/{bookmark}', [BookmarkController::class, 'update'])->middleware('auth');
 Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->middleware('auth');
-Route::get('/search', \App\Http\Controllers\SearchByNameController::class)->middleware('auth');
+Route::get('/search', SearchController::class)->middleware('auth');
+Route::get('/categories/refresh', RefreshCategoriesController::class)->middleware('auth');
 
 
 
