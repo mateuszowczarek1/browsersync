@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBookmarkRequest;
-use App\Http\Requests\UpdateBookmarkRequest;
 use App\Models\Bookmark;
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class BookmarkController extends Controller

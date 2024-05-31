@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookmark;
 use App\Models\Catalogue;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CatalogueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $user = Auth::user();
@@ -19,17 +19,11 @@ class CatalogueController extends Controller
         return Inertia::render('catalogues/CataloguesIndex', ['user' => $user]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return Inertia::render('catalogues/CreateCatalogue', ['user' => Auth::user()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store()
     {
 
@@ -46,12 +40,8 @@ class CatalogueController extends Controller
         return to_route('list-catalogues');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Catalogue $catalogue)
     {
-
 
         $catalogue = $catalogue->load(['user', 'bookmarks']);
 
@@ -62,9 +52,6 @@ class CatalogueController extends Controller
         return Inertia::render('catalogues/ShowCatalogue', ['catalogue' => $catalogue]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Catalogue $catalogue)
     {
         $user = Auth::user()->load('bookmarks');
@@ -77,9 +64,6 @@ class CatalogueController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Catalogue $catalogue)
     {
         $user = Auth::user();
@@ -105,9 +89,6 @@ class CatalogueController extends Controller
         return to_route('list-catalogues');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Catalogue $catalogue)
     {
         $user = Auth::user();
@@ -117,6 +98,30 @@ class CatalogueController extends Controller
         }
 
         $catalogue->delete();
+
+        return to_route('list-catalogues');
+    }
+
+    public function clone(Catalogue $catalogue)
+    {
+        if (!Gate::allows('clone-catalogue', $catalogue)) {
+            abort(403, 'You cannot clone this catalogue. It has not been made public yet!');
+        }
+
+        $user = Auth::user();
+
+        $newCatalogue = $user->catalogues()->create($catalogue->only('name', 'is_published'));
+
+        foreach ($catalogue->bookmarks as $bookmark) {
+            $existingBookmark = Bookmark::where('url', $bookmark->url)->where('user_id', $user->id)->first();
+            if ($existingBookmark) {
+                $newCatalogue->bookmarks()->attach($existingBookmark->id);
+            } else {
+                $newBookmarkData = $bookmark->only('name', 'url');
+                $newBookmarkData['user_id'] = $user->id;
+                $newCatalogue->bookmarks()->create($newBookmarkData);
+            }
+        }
 
         return to_route('list-catalogues');
     }

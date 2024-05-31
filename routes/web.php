@@ -52,3 +52,4 @@ Route::post('/catalogues/add', [CatalogueController::class, 'store'])->middlewar
 Route::get('/catalogues/edit/{catalogue}', [CatalogueController::class, 'edit'])->middleware('auth');
 Route::put('/catalogues/edit/{catalogue}', [CatalogueController::class, 'update'])->middleware('auth');
 Route::delete('/catalogues/edit/{catalogue}', [CatalogueController::class, 'destroy'])->middleware('auth');
+Route::post('/catalogues/clone/{catalogue}', [CatalogueController::class, 'clone'])->middleware('auth');
