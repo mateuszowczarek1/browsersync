@@ -35,7 +35,7 @@ class CatalogueController extends Controller
         $validatedAttributes['is_published'] = $validatedAttributes['isPublished'];
         unset($validatedAttributes['isPublished']);
 
-        Auth::user()->catalogues()->create($validatedAttributes);
+        Auth::user()->catalogues()->create([...$validatedAttributes, 'original_author' => $validatedAttributes['name']]);
 
         return to_route('list-catalogues');
     }
@@ -109,7 +109,7 @@ class CatalogueController extends Controller
 
         $user = Auth::user();
 
-        $newCatalogue = $user->catalogues()->create($catalogue->only('name', 'is_published'));
+        $newCatalogue = $user->catalogues()->create([...$catalogue->only('name', 'is_published'), 'original_author' => $catalogue->user->name]);
 
         foreach ($catalogue->bookmarks as $bookmark) {
             $newCatalogue->bookmarks()->attach($bookmark->id);
