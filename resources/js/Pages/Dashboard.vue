@@ -87,6 +87,7 @@
                     <FormSection />
                 </form>
                 <p v-if="foundBookmarks && foundBookmarks.length === 0"><strong>Could not found the bookmark you were looking for.</strong></p>
+                <p v-if="filterByCategory" class="my-2 text-lg">Chosen filter: <strong class="font-semibold overline text-xl text-purple-300">{{ filterByCategory }}</strong></p>
                 <span @click="resetSearches"
                     class="inline-block p-2 my-4 text-purple-300 bg-purple-300/10 rounded-xl px-2 hover:bg-purple-300/25 transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
                     all bookmarks</span>
