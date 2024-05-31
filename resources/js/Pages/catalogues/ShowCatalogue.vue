@@ -36,8 +36,11 @@ const auth = useAuthStore();
             This catalogue does not exist or has not yet been made public by the author.
         </div>
 
-            <div class="py-4" v-if="catalogue.is_published == true && catalogue.user_id !== auth.getUser().id" >
+            <div class="py-4" v-if="catalogue.is_published == true && auth.getUser() !== null  && catalogue.user_id !== auth.getUser().id" >
                 <Link :href="`/catalogues/clone/${catalogue.id}`" as="button" method="post" class="py-2 px-4 rounded-xl bg-green-700 inline-block cursor-pointer hover:bg-green-600 transition-colors duration-400 mx-4 mb-5">Add this catalogue to your own collection</Link>
+            </div>
+            <div class="py-4" v-else-if="!auth.getUser()">
+                <Link href="/login" as="button" method="get" class="py-2 px-4 rounded-xl bg-green-700 inline-block cursor-pointer hover:bg-green-600 transition-colors duration-400 mx-4 mb-5">Log in to manage or clone this catalogue</Link>
             </div>
             <div v-if="auth.getUser() && auth.getUser().id === catalogue.user_id" class="bg-white/10 rounded-xl my-5">
                 <div class="font-semibold py-2 px-4 text-xl">

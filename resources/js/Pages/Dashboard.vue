@@ -56,6 +56,8 @@
         bookmarks.value = __props.bookmarks;
     }
 }, {deep: true});
+
+
     const form = useForm({
         query: null,
     });
