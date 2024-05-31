@@ -61,7 +61,6 @@ class CatalogueController extends Controller
         }
 
         return Inertia::render('catalogues/EditCatalogue', ['catalogue' => $catalogue->load('bookmarks'), 'bookmarks' => $user->bookmarks]);
-
     }
 
     public function update(Catalogue $catalogue)
@@ -84,7 +83,7 @@ class CatalogueController extends Controller
             $catalogue->bookmarks()->attach($bookmarkId);
         }
 
-    $catalogue->save();
+        $catalogue->save();
 
         return to_route('list-catalogues');
     }
@@ -113,14 +112,7 @@ class CatalogueController extends Controller
         $newCatalogue = $user->catalogues()->create($catalogue->only('name', 'is_published'));
 
         foreach ($catalogue->bookmarks as $bookmark) {
-            $existingBookmark = Bookmark::where('url', $bookmark->url)->where('user_id', $user->id)->first();
-            if ($existingBookmark) {
-                $newCatalogue->bookmarks()->attach($existingBookmark->id);
-            } else {
-                $newBookmarkData = $bookmark->only('name', 'url');
-                $newBookmarkData['user_id'] = $user->id;
-                $newCatalogue->bookmarks()->create($newBookmarkData);
-            }
+            $newCatalogue->bookmarks()->attach($bookmark->id);
         }
 
         return to_route('list-catalogues');
