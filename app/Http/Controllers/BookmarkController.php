@@ -10,13 +10,10 @@ use Inertia\Inertia;
 
 class BookmarkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index($paginate = false)
     {
         $user = Auth::user();
-        $query = $user->bookmarks()->with('categories')->latest();
+        $query = $user->bookmarks()->with('categories')->where('is_visible', true)->latest();
 
         if ($paginate) {
             $bookmarks = $query->paginate(15);
@@ -31,7 +28,7 @@ class BookmarkController extends Controller
 
     public function loadDashboard()
     {
-        extract($this->index(false));
+        extract($this->index(true));
 
         return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
@@ -72,17 +69,6 @@ class BookmarkController extends Controller
         return;
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bookmark $bookmark)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Bookmark $bookmark)
     {
         if (!Gate::allows('edit-bookmark', $bookmark)) {
@@ -92,9 +78,6 @@ class BookmarkController extends Controller
         return Inertia::render('auth/ShowBookmark', ['bookmark' => $bookmark, 'user_id' => Auth::user()->id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Bookmark $bookmark)
     {
         if (!Gate::allows('edit-bookmark', $bookmark)) {
@@ -121,16 +104,14 @@ class BookmarkController extends Controller
         return to_route('list-bookmarks');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Bookmark $bookmark)
     {
         if ($bookmark->user_id !== Auth::user()->id) {
             abort(403, 'This bookmark does not belong to you. Go back now!');
         }
 
-        $bookmark->delete();
+        $bookmark->is_visible = false;
+        $bookmark->save();
 
         return to_route('list-bookmarks');
     }
