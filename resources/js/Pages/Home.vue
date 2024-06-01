@@ -47,7 +47,7 @@ auth.clearUser();
 <style scoped>
 #hero {
     background-image: linear-gradient(rgba(20, 13, 54, 0.9), rgba(20, 13, 54, 0.9)),
-        url("images/herobg.webp");
+        url("/resources/herobg.webp");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
