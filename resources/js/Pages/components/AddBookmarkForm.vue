@@ -72,8 +72,8 @@ async function updateUniqueCategories() {
             </label>
             <select v-model="form.mainCategory" id="mainCategory" name="mainCategory"
                 class="my-2 bg-green/15 p-2 rounded-xl px-4">
-                <option value="uncategorized" selected>Uncategorized</option>
-                <option v-for="category in uniqueCategories.categories" :key="category.id" :value="category.name">{{ category.name
+                <option value="uncategorized"selected class="bg-navy">Uncategorized</option>
+                <option v-for="category in uniqueCategories.categories" class="bg-navy" :key="category.id" :value="category.name">{{ category.name
                     }}</option>
             </select>
         </div>
