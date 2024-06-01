@@ -6,7 +6,7 @@ defineProps({
 
 <template>
         <a :href="bookmark.url" target="_blank"
-           class="font-semibold text-lg hover:text-purple-400 transition-colors duration-300">{{
+           class="font-semibold text-xl hover:text-green transition-colors duration-300">{{
                 bookmark.name
             }}</a>
 </template>

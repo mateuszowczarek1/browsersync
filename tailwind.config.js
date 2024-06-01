@@ -5,11 +5,12 @@ export default {
     theme: {
         extend: {
             colors: {
-                black: "#090119",
-                white: "#ede5ff"
+                navy: "#140D36",
+                white: "#ebfaf7",
+                green: "#3ABBA7"
             },
             fontFamily: {
-                varta: ["Varta", "sans-serif"],
+                outfit: ["outfit", "sans-serif"],
             },
         },
     },

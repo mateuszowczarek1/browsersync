@@ -26,9 +26,9 @@ onMounted(async () => {
 <template>
     <Layout>
         <Panel title="Edit Your Bookmarks">
-            <div class="flex gap-4 justify-center font-semibold text-xl flex-wrap text-center">
+            <div class="flex gap-4 justify-center font-semibold text-xl flex-col text-center">
                 <span v-for="bookmark in bookmarks"
-                    class="border-b-2 border-purple-500/30 my-2 break-words hover:bg-purple-400 p-2 rounded-xl"
+                    class="border-b-2 my-2 break-words hover:bg-green p-2 transition-colors duration-300"
                     :key="bookmark.id">
                     <Link :href="`/bookmarks/${bookmark.id}`" as="button">{{ bookmark.name }}</Link>
                 </span>

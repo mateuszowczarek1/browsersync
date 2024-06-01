@@ -26,7 +26,7 @@ function submit() {
 <template>
     <Layout>
         <Panel title="Log in" class="col-span-2">
-            <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
+            <form @submit.prevent="submit" class="mx-2 my-2">
 
                 <FormSection>
                     <FormLabel label-for="email">Email:</FormLabel>

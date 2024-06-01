@@ -28,7 +28,7 @@ function submit() {
 <template>
     <Layout>
         <Panel title="Create your bookmark catalogue" class="col-span-2">
-            <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
+            <form @submit.prevent="submit" class="mx-2 my-2 ">
                 <FormSection>
                     <FormLabel label-for="email">Catalogue Name:</FormLabel>
                     <FormInput type="string" id="name" name="name" placeholder="Catalogue name"
@@ -37,7 +37,7 @@ function submit() {
                 </FormSection>
                 <FormSection>
                     <FormLabel label-for="is-published">Should your catalogue be visible already?</FormLabel>
-                    <FormInput type="checkbox" id="is-published" name="is-published"
+                    <FormInput type="checkbox" class="w-8 h-8 focus:ring-2 ring-green" id="is-published" name="is-published"
                         @updateForm="(value) => form.isPublished = value" />
                     </FormSection>
                     <FormSection>

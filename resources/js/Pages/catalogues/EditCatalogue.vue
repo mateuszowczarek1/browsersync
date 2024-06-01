@@ -30,7 +30,7 @@ function submit(){
     <Layout>
         <Panel title="Edit Your Catalogue">
             <div class="flex gap-4 font-semibold flex-wrap">
-                <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
+                <form @submit.prevent="submit" class="mx-2 my-2">
                     <FormSection>
                         <FormLabel label-for="name">Catalogue name:</FormLabel>
                         <FormInput type="string" id="name" name="name" :value="form.name"
@@ -39,7 +39,7 @@ function submit(){
                     </FormSection>
                     <FormSection>
                         <FormLabel label-for="is_published">Should your catalogue be public?</FormLabel>
-                        <fieldset id="is_published" name="is_published" class="flex items-center bg-white/20 text-purple-200 gap-2 p-4 rounded-xl">
+                        <fieldset id="is_published" name="is_published" class="flex items-center bg-white/20  gap-2 p-4 rounded-xl">
                             <label for="yes">Make public</label>
                             <input type="radio" id="yes" name="yes" value="1" v-model="form.is_published" />
                             <label for="no">Make private</label>
@@ -49,7 +49,7 @@ function submit(){
                     </FormSection>
                     <FormSection>
                         <FormLabel label-for="bookmarks">Select bookmarks to add for this catalogue</FormLabel>
-                        <div class="flex gap-2 flex-wrap items-center bg-white/20 p-4 rounded-xl text-purple-200">
+                        <div class="flex gap-2 flex-wrap items-center bg-navy/45 p-4 rounded-xl">
                             <div v-for="bookmark in bookmarks" :key="bookmark.id" class="space-x-4">
                                 <input type="checkbox" :id="`bookmark_${bookmark.id}`" :value="bookmark.id" v-model="form.bookmarks" :checked="form.bookmarks.includes(bookmark.id)" />
                                 <label :for="`bookmark_${bookmark.id}`">{{ bookmark.name }}</label>
@@ -64,8 +64,8 @@ function submit(){
         </Panel>
         <Panel title="Your bookmark database">
             <div>
-               <ul class="flex gap-5 flex-wrap">
-                   <li v-for="bookmark in bookmarks" class="block border border-purple-600 p-2 mt-2 mb-7 rounded-xl">
+               <ul class="flex flex-col">
+                   <li v-for="bookmark in bookmarks" class="block border border-green p-2 my-2 rounded-xl">
                        {{bookmark.name}}
                    </li>
                </ul>

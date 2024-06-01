@@ -30,7 +30,7 @@ function submit() {
 <template>
     <Layout>
         <Panel title="Edit user Info" class="col-span-2">
-            <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
+            <form @submit.prevent="submit" class="mx-2 my-2">
 
                 <FormSection>
                     <FormLabel label-for="name">Name:</FormLabel>

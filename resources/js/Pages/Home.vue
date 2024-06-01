@@ -1,5 +1,5 @@
 <script setup>
-import {useAuthStore} from '../store/userStore';
+import { useAuthStore } from '../store/userStore';
 import Layout from './Layout.vue';
 import Panel from './components/Panel.vue';
 const auth = useAuthStore();
@@ -8,10 +8,11 @@ auth.clearUser();
 
 <template>
     <Layout>
-        <Panel title="Hello!" class="col-span-2">
+        <Panel title="Hello!" class="col-span-2" id="hero">
             <div class="flex gap-8 p-2 items-center justify-center flex-col">
 
                 <div class="text-xl text-justify space-y-5 break-words">
+                    <h1 class="text-4xl">Bookmkr - Organize your bookmarks!</h1>
                     <p>Introducing our sleek bookmark management platform! Our app provides a streamlined solution for
                         organizing and managing all your bookmarks one convenient location. Bid farewell to cluttered
                         browse bookmarks and embrace seamless organization!
@@ -38,11 +39,18 @@ auth.clearUser();
                         – welcome to the future of bookmark organization!
                     </p>
                 </div>
-                <div>
-                    <img src="images/robin.jpg" alt="robin"
-                         class="rounded-xl border border-4 border-e-purple-400 sm:w-[100%] lg:w-[30%] mx-auto"/>
-                </div>
             </div>
         </Panel>
     </Layout>
 </template>
+
+<style scoped>
+#hero {
+    background-image: linear-gradient(rgba(20, 13, 54, 0.9), rgba(20, 13, 54, 0.9)),
+        url("images/herobg.webp");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+</style>

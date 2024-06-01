@@ -76,34 +76,35 @@
     <template>
         <Layout>
             <Panel v-if="bookmarksFromProps.length" title="Bookmarks">
-
-                <form @submit.prevent="submit">
-                    <FormSection>
-                        <input class="my-2 bg-purple-400 p-2 rounded-xl placeholder-purple-600" v-model="form.query" />
-                    </FormSection>
-                    <FormSection />
-                    <SubmitButton>Search</SubmitButton>
-                    <FormSection />
-                </form>
+                <p class="text-sm px-1">Look for a specific bookmark here:</p>
+                <hr class="mx-1 w-10">
+                    <form @submit.prevent="submit" class="flex flex-wrap items-center gap-1">
+                        <FormSection>
+                            <input class="my-2 bg-green/15 py-3 px-4 rounded-xl placeholder-white/30 inline" v-model="form.query" />
+                        </FormSection>
+                        <FormSection />
+                        <SubmitButton class="mt-0 mb-1">Search</SubmitButton>
+                        <FormSection />
+                    </form>
                 <p v-if="foundBookmarks && foundBookmarks.length === 0"><strong>Could not found the bookmark you were
                         looking for.</strong></p>
-                <p v-if="chosenFilter" class="my-2 text-lg">Chosen filter: <strong
-                        class="font-semibold overline text-xl text-purple-300">{{ chosenFilter }}</strong></p>
+                <p v-if="chosenFilter" class="my-8 bg-green/30 py-4 rounded-xl px-4 text-lg">Chosen filter: <strong
+                        class="font-semibold overline text-2xl">{{ chosenFilter }}</strong></p>
                 <span @click="resetSearches"
-                    class="inline-block p-2 my-4 text-purple-300 bg-purple-300/10 rounded-xl px-2 hover:bg-purple-300/25 transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
+                    class="inline-block p-2 my-4 text-navy/80 bg-green/80 rounded-xl px-2 hover:bg-green transition-colors duration-300 cursor-pointer font-semibold text-xl">Show
                     all bookmarks</span>
-                <ul class=" break-words">
-                    <li v-for="bookmark in bookmarksFromProps" :key="bookmark.id" class="mt-2 text-left">
+                <ol class=" break-words list-decimal px-4 mx-2">
+                    <li v-for="bookmark in bookmarksFromProps" :key="bookmark.id" class="mt-2 text-left border-b border-green hover:bg-white/10 px-2 py-2 transition-colors duration-500 rounded-xl">
                         <BookmarkLink :bookmark="bookmark" />
                         <BookmarkPlaintext :bookmark="bookmark" />
-                        <div class="flex gap-2 flex-wrap mt-2 border-b border-purple-600">
+                        <div class="flex gap-2 flex-wrap my-4">
                             <BookmarkCategory v-for="category in bookmark.categories"
                                 @click="filterByTag(category.name)" :key="category.id" :category="category">{{
                                     category.name }}
                             </BookmarkCategory>
                         </div>
                     </li>
-                </ul>
+                </ol>
                  <!-- Paginator -->
             <BookmarkPaginator :bookmarks="bookmarks" />
             </Panel>

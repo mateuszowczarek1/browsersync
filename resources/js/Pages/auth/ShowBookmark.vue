@@ -32,7 +32,7 @@ function submit(){
 <template>
     <Layout>
         <Panel title="Edit Bookmark" class="col-span-2">
-            <form @submit.prevent="submit" class="mx-2 my-2 text-purple-950">
+            <form @submit.prevent="submit" class="mx-2 my-2">
 
                 <FormSection>
                     <FormLabel label-for="name">Name:</FormLabel>
@@ -56,7 +56,7 @@ function submit(){
                     <SubmitButton>Edit Bookmark</SubmitButton>
                 </FormSection>
             </form>
-            <Link :href="`/bookmarks/${bookmark.id}`" as="button" method="delete" class="inline-block p-2 border-2 border-dotted border-purple-600 rounded-xl hover:bg-red-600/10 my-4">🗑️ Delete this bookmark</Link>
+            <Link :href="`/bookmarks/${bookmark.id}`" as="button" method="delete" class="inline-block p-2 border-2 border-dotted border-red-500 rounded-xl hover:bg-red-600/10 my-4">🗑️ Delete this bookmark</Link>
         </Panel>
     </Layout>
 </template>
