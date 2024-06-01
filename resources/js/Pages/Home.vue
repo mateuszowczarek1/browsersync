@@ -12,7 +12,7 @@ auth.clearUser();
             <div class="flex gap-8 p-2 items-center justify-center flex-col">
 
                 <div class="text-xl text-justify space-y-5 break-words">
-                    <h1 class="text-4xl">Bookmkr - Organize your bookmarks!</h1>
+                    <h1 class="text-4xl">Bookmarkr - Organize your bookmarks!</h1>
                     <p>Introducing our sleek bookmark management platform! Our app provides a streamlined solution for
                         organizing and managing all your bookmarks one convenient location. Bid farewell to cluttered
                         browse bookmarks and embrace seamless organization!

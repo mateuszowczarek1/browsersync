@@ -5,7 +5,7 @@
 
 <hr />
 
-# HomePage
+# Bookmarkr
 <p>Introducing our sleek bookmark management platform! Our app provides a streamlined solution for organizing and managing all your bookmarks one convenient location. Bid farewell to cluttered browse bookmarks and embrace seamless organization!</p>
 
 <p>Our platform simplifies the process of adding and categorizing bookmarks with just a few clicks. Whether you're saving articles, websites, or resources for later, our intuitive interface allows you to create a tailored system tailored to your preferences. Plus, each bookmark can be assigned multiple categories, ensuring easy access and efficient organization.</p>
