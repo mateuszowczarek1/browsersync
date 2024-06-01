@@ -54,7 +54,12 @@ class CatalogueController extends Controller
 
     public function edit(Catalogue $catalogue)
     {
-        $user = Auth::user()->load('bookmarks');
+        $user = Auth::user()->load([
+            'bookmarks' => function ($query) {
+                $query->where('is_visible', 1);
+            }
+        ]);
+
 
         if ($user->id !== $catalogue->user_id) {
             abort(403, 'This catalogue does not belong to you. Go back now!');
