@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CatalogueController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\RefreshCategoriesController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
@@ -36,6 +37,7 @@ Route::put('/user', [SessionController::class, 'update'])->middleware('auth');
 #Bookmarks
 Route::post('/bookmarks/add', [BookmarkController::class, 'store'])->middleware('auth');
 Route::get('/bookmarks', [BookmarkController::class, 'loadEdit'])->middleware('auth')->name('list-bookmarks');
+Route::get('/bookmarks/filter', FilterController::class)->middleware('auth');
 Route::get('/bookmarks/{bookmark}', [BookmarkController::class, 'edit'])->middleware('auth');
 Route::patch('/bookmarks/{bookmark}', [BookmarkController::class, 'update'])->middleware('auth');
 Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->middleware('auth');

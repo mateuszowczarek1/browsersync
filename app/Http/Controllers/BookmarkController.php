@@ -28,7 +28,7 @@ class BookmarkController extends Controller
 
     public function loadDashboard()
     {
-        extract($this->index(false));
+        extract($this->index(true));
 
         return Inertia::render('Dashboard', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
