@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create($validatedAttributes);
-        $user->assignRole('user');
+    $user->assignRole('user');
 
         Auth::login($user);
         return to_route('dashboard');
