@@ -60,4 +60,9 @@ Route::post('/catalogues/clone/{catalogue}', [CatalogueController::class, 'clone
 
 
 #Admin
-Route::get('/admin', [AdminController::class, 'show'])->middleware('auth')->middleware(AdminMiddleware::class);
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get('/admin', [AdminController::class, 'show']);
+    Route::get('/admin/users', [AdminController::class, 'usersIndex']);
+    Route::get('/admin/users/{user}', [AdminController::class, 'userShow']);
+
+});
