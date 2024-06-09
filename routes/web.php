@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\FilterController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\RefreshCategoriesController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -55,3 +57,7 @@ Route::get('/catalogues/edit/{catalogue}', [CatalogueController::class, 'edit'])
 Route::put('/catalogues/edit/{catalogue}', [CatalogueController::class, 'update'])->middleware('auth');
 Route::delete('/catalogues/edit/{catalogue}', [CatalogueController::class, 'destroy'])->middleware('auth');
 Route::post('/catalogues/clone/{catalogue}', [CatalogueController::class, 'clone'])->middleware('auth');
+
+
+#Admin
+Route::get('/admin', [AdminController::class, 'index'])->middleware('auth')->middleware(AdminMiddleware::class);
