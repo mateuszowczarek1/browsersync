@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreBookmarkRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreBookmarkRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return (bool) Auth::user();
     }
 
     /**
@@ -22,7 +23,11 @@ class StoreBookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'min:5', 'max:100', 'string'],
+            'url' => ['required', 'min:10', 'max:500', 'string'],
+            'mainCategory' => ['string', 'min:3', 'max:50'],
+            'newCategories' => ['nullable','array'],
+            'newCategories.*' => ['string', 'max:50'],
         ];
     }
 }

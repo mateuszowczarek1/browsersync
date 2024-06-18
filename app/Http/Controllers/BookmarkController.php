@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookmarkRequest;
+use App\Http\Requests\UpdateBookmarkRequest;
 use App\Models\Bookmark;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
 
 class BookmarkController extends Controller
 {
@@ -39,25 +41,21 @@ class BookmarkController extends Controller
         return Inertia::render('auth/EditBookmarks', ['bookmarks' => $bookmarks, 'user' => $user]);
     }
 
-    public function store()
+    public function store(StoreBookmarkRequest $request)
     {
 
-        request()->validate([
-            'name' => ['required', 'min:5', 'max:100', 'string'],
-            'url' => ['required', 'min:10', 'max:500', 'string'],
-        ]);
+        $validated = $request->validated();
 
-        $bookmark = Auth::user()->bookmarks()->create(['name' => request('name'), 'url' => request('url')]);
+        $bookmark = Auth::user()->bookmarks()->create(['name' => $validated['name'], 'url' => $validated['url']]);
 
-        if (request()->has('mainCategory') && request('mainCategory') !== null) {
+        $mainCategoryName = $validated['mainCategory'] ?? 'Uncategorized';
+        $mainCategory = Category::firstOrCreate(['name' => $mainCategoryName]);
 
-            $mainCategory = Category::firstOrCreate(['name' => request('mainCategory')]);
+        $bookmark->categories()->attach($mainCategory);
 
-            $bookmark->categories()->attach($mainCategory);
-        }
 
-        if (request()->has('newCategories') && is_array(request('newCategories'))) {
-            foreach (request('newCategories') as $newCategory) {
+        if (!empty($validated['newCategories'])) {
+            foreach ($validated['newCategories'] as $newCategory) {
                 if (strlen($newCategory) < 3 || strlen($newCategory) > 50) {
                     continue;
                 }
@@ -78,20 +76,12 @@ class BookmarkController extends Controller
         return Inertia::render('auth/ShowBookmark', ['bookmark' => $bookmark, 'user_id' => Auth::user()->id]);
     }
 
-    public function update(Bookmark $bookmark)
+    public function update(UpdateBookmarkRequest $request, Bookmark $bookmark)
     {
-        if (!Gate::allows('edit-bookmark', $bookmark)) {
-            abort(403, 'This bookmark does not belong to you. Go back now!');
-        }
-
-        request()->validate([
-            'name' => ['required', 'min:5', 'max:100', 'string'],
-            'url' => ['required', 'min:10', 'max:500', 'string'],
-        ]);
 
         $bookmark->categories()->detach();
 
-        foreach (request('categories') as $newCategory) {
+        foreach ($request->input('categories', []) as $newCategory) {
             if (strlen($newCategory) < 3 || strlen($newCategory) > 50) {
                 continue;
             }
@@ -99,7 +89,7 @@ class BookmarkController extends Controller
             $bookmark->categories()->attach($category);
         }
 
-        $bookmark->update(['name' => request('name'), 'url' => request('url')]);
+        $bookmark->update($request->only(['name', 'url']));
 
         return to_route('list-bookmarks');
     }

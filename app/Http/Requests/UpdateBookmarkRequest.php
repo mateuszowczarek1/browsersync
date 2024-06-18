@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Bookmark;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateBookmarkRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
-        return false;
+        $bookmark = $this->route('bookmark');
+        return Gate::allows('edit-bookmark', $bookmark);
     }
 
     /**
@@ -22,7 +23,8 @@ class UpdateBookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'min:5', 'max:100', 'string'],
+            'url' => ['required', 'min:10', 'max:500', 'string']
         ];
     }
 }
