@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Bookmark;
-use App\Models\Catalogue;
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,12 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('edit-bookmark', function (User $user, Bookmark $bookmark) {
-            return $bookmark->user->is($user);
-        });
 
-        Gate::define('clone-catalogue', function (User $user, Catalogue $catalogue) {
-            return $catalogue->is_published === 1;
-        });
     }
 }
